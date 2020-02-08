@@ -73,8 +73,9 @@ export async function vuedocLoader(
 
 	// set dependency tree for mixins an extends
 	const originFiles = findOrigins(docs)
-	originFiles.forEach(file => {
-		this.addDependency(file)
+	const basedir = path.dirname(file)
+	originFiles.forEach(extensionFile => {
+		this.addDependency(path.join(basedir, extensionFile))
 	})
 
 	let vsgDocs: ComponentProps = {

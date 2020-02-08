@@ -47,12 +47,12 @@ export default async function documentRequiredComponents(
 		if (fullFilePath && vars) {
 			// if we are in a mixin or an extend we want to apply
 			// all props on the current doc, instad of creating anther one
-			if (originObject) {
+			if (originObject && documentation) {
 				try {
 					const originVar = {
 						[originObject]: {
 							name: '-',
-							path: fullFilePath
+							path: path.relative(path.dirname(documentation.componentFullfilePath), fullFilePath)
 						}
 					}
 					await vars.reduce(async (_, v) => {
