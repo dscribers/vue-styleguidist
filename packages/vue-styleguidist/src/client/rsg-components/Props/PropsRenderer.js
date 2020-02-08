@@ -56,6 +56,17 @@ function renderValuesHoc(classes) {
 	}
 }
 
+function renderOriginHoc() {
+	return function renderOrigin(prop) {
+		return (
+			<>
+				{prop.extends && <div>extends: {JSON.stringify(prop.extends)}</div>}
+				{prop.mixin && <div>mixin: {JSON.stringify(prop.mixin)}</div>}
+			</>
+		)
+	}
+}
+
 export const columns = (props, classes) => [
 	{
 		caption: 'Prop name',
@@ -79,6 +90,10 @@ export const columns = (props, classes) => [
 	{
 		caption: 'Default',
 		render: renderDefaultHoc(classes)
+	},
+	{
+		caption: 'Origin',
+		render: renderOriginHoc(classes)
 	}
 ]
 
