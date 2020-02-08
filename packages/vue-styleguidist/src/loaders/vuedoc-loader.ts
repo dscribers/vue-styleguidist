@@ -10,6 +10,7 @@ import { StyleguidistContext } from '../types/StyleGuide'
 import getExamples from './utils/getExamples'
 import getComponentVueDoc from './utils/getComponentVueDoc'
 import findOrigins from './utils/findOrigins'
+import stripOutOrigins from './utils/stripOutOrigins'
 
 const logger = createLogger('vsg')
 const examplesLoader = path.resolve(__dirname, './examples-loader.js')
@@ -78,6 +79,12 @@ export async function vuedocLoader(
 		this.addDependency(path.join(basedir, extensionFile))
 	})
 
+	// strip out origins if config is set to false to
+	// keep origins from displaying
+	if (!config.displayOrigins) {
+		stripOutOrigins(docs)
+	}
+
 	let vsgDocs: ComponentProps = {
 		...docs,
 		events: makeObject(docs.events),
@@ -102,6 +109,7 @@ export async function vuedocLoader(
 			vsgDocs.example = requireIt(`!!${examplesLoader}?customLangs=vue|js|jsx!${examplePath}`)
 		}
 	}
+
 	if (docs.props) {
 		const filteredProps = docs.props.filter(prop => !prop.tags || !prop.tags.ignore)
 		const sortProps = config.sortProps || defaultSortProps

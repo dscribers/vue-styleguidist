@@ -91,10 +91,14 @@ export const columns = (props, classes) => [
 		caption: 'Default',
 		render: renderDefaultHoc(classes)
 	},
-	{
-		caption: 'Origin',
-		render: renderOriginHoc(classes)
-	}
+	...(props.some(p => p.mixin || p.extends)
+		? [
+				{
+					caption: 'Origin',
+					render: renderOriginHoc(classes)
+				}
+		  ]
+		: [])
 ]
 
 function PropsRenderer({ props, classes }) {
