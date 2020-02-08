@@ -9,6 +9,7 @@ import { ComponentProps } from '../types/Component'
 import { StyleguidistContext } from '../types/StyleGuide'
 import getExamples from './utils/getExamples'
 import getComponentVueDoc from './utils/getComponentVueDoc'
+import findOrigins from './utils/findOrigins'
 
 const logger = createLogger('vsg')
 const examplesLoader = path.resolve(__dirname, './examples-loader.js')
@@ -69,6 +70,12 @@ export async function vuedocLoader(
 		const componentPath = path.relative(process.cwd(), file)
 		logger.warn(`Error parsing ${componentPath}: ${e}`)
 	}
+
+	// set dependency tree for mixins an extends
+	const originFiles = findOrigins(docs)
+	originFiles.forEach(file => {
+		this.addDependency(file)
+	})
 
 	let vsgDocs: ComponentProps = {
 		...docs,
