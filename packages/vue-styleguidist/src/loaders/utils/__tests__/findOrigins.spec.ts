@@ -23,8 +23,6 @@ describe('findOrigins', () => {
 		  "path/to/extends",
 		  "path/to/mixin",
 		  "path/to/extends/method",
-		  "path/to/extends",
-		  "path/to/mixin",
 		]
 	`)
 	})
