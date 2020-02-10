@@ -68,7 +68,8 @@ export default async function documentRequiredComponents(
 						)
 					}, Promise.resolve())
 					if (documentation && originVar[originObject]) {
-						originVar[originObject].name = documentation.get('displayName')
+						originVar[originObject].name =
+							documentation.get('displayName') || documentation.get('exportName')
 						documentation.set('displayName', null)
 					}
 				} catch (e) {
