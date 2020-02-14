@@ -174,6 +174,27 @@ describe('render function slotHandler', () => {
 		done()
 	})
 
+	it('should not fail if forEach is following usage of the slot', async done => {
+		const src = `
+      export default {
+        render(h) {
+			if (this.$slots.default) {
+				this.$slots.default.forEach(() => {
+				  console.log('foo');
+				})
+			}
+			return h('hr');
+		}
+      };
+  `
+		const def = parse(src)
+		if (def) {
+			await slotHandler(documentation, def)
+		}
+		expect(documentation.getSlotDescriptor).toHaveBeenCalledWith('default')
+		done()
+	})
+
 	it('should detect scopedSlots in renderless components', async done => {
 		const src = `
       export default {
@@ -276,6 +297,39 @@ export default {
 		expect(documentation.getSlotDescriptor).toHaveBeenCalledTimes(8)
 		expect(mockSlotDescriptor.description).toEqual('the content for the pending state')
 		done()
+	})
+	describe('tags', () => {
+		it('should extract tags from the description block', async done => {
+			const src = `
+	export default {
+	  render(createElement) {
+		return createElement('div', [
+			/**
+			 * @slot 
+			 * @ignore
+			 */
+			this.$scopedSlots.default
+		])
+	  }
+	}
+	`
+			const def = parse(src)
+			if (def) {
+				await slotHandler(documentation, def)
+			}
+			expect(mockSlotDescriptor.tags).not.toBeUndefined()
+			expect(mockSlotDescriptor.tags).toMatchInlineSnapshot(`
+			Object {
+			  "ignore": Array [
+			    Object {
+			      "description": true,
+			      "title": "ignore",
+			    },
+			  ],
+			}
+		`)
+			done()
+		})
 	})
 
 	describe('bindings', () => {

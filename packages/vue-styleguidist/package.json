@@ -1,7 +1,7 @@
 {
 	"name": "vue-styleguidist",
 	"description": "Vue components style guide generator",
-	"version": "4.7.7",
+	"version": "4.8.1",
 	"homepage": "https://vue-styleguidist.github.io",
 	"scripts": {
 		"compile": "yarn typings && babel --delete-dir-on-start src/ --ignore **/__tests__,**/*.spec.* -d lib/ --extensions .js,.ts,.tsx,.jsx",
@@ -70,12 +70,12 @@
 		"react-icons": "^3.7.0",
 		"react-lifecycles-compat": "^3.0.4",
 		"react-simple-code-editor": "^0.9.4",
-		"react-styleguidist": "^10.5.0",
+		"react-styleguidist": "^10.6.2",
 		"rewrite-imports": "^2.0.3",
 		"style-loader": "^1.0.0",
 		"terser-webpack-plugin": "^2.2.2",
 		"to-ast": "^1.0.0",
-		"vue-docgen-api": "^4.7.7",
+		"vue-docgen-api": "^4.8.1",
 		"vue-inbrowser-compiler": "^4.2.2",
 		"vue-inbrowser-compiler-utils": "^4.0.1",
 		"webpack-dev-server": "^3.7.1",
